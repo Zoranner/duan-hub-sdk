@@ -10,10 +10,11 @@
   },
   "type": "module",
   "scripts": {
+    "format": "prettier --write --parser=typescript src/**/*.ts",
     "build": "node es-build.js",
     "build:watch": "nodemon",
-    "format": "prettier --write --parser=typescript src/**/*.ts",
-    "postbuild": "tsc --emitDeclarationOnly --declaration"
+    "postbuild": "tsc --emitDeclarationOnly --declaration",
+    "test": "jest --config jestconfig.json"
   },
   "keywords": [],
   "files": [
@@ -23,11 +24,14 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.12",
     "@types/uuid": "9.0.8",
     "esbuild": "^0.20.2",
+    "jest": "^29.7.0",
     "lint-staged": "^15.2.2",
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
+    "ts-jest": "^29.1.2",
     "typescript": "^5.4.4"
   }
 }

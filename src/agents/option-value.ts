@@ -48,13 +48,13 @@ export class Quaternion {
 
 export interface IOptionValue {}
 
-export abstract class BasicValue<TValue> implements IOptionValue {
+abstract class BasicValue<TValue> implements IOptionValue {
   current!: TValue;
 }
 
 export class StringValue extends BasicValue<string> {}
 
-export class NumberValue extends BasicValue<number> {
+class NumberValue extends BasicValue<number> {
   min: number = 0;
   max: number = 0;
 }
@@ -74,7 +74,7 @@ export interface EnumValue extends BasicValue<number> {
   items: EnumItem[];
 }
 
-export interface RangeValue extends BasicValue<Range> {
+interface RangeValue extends BasicValue<Range> {
   min: number;
   max: number;
 }
@@ -83,7 +83,7 @@ export interface IntRangeValue extends RangeValue {}
 
 export interface DoubleRangeValue extends RangeValue {}
 
-export interface BandValue extends BasicValue<Band> {
+interface BandValue extends BasicValue<Band> {
   min: number;
   max: number;
 }

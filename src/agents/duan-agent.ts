@@ -44,7 +44,7 @@ export class DuanAgent {
 
   public addInputOption(option: AgentOption): void {
     if (this._inputs.has(option.name)) {
-      new OptionNameExistError(
+      new KeyExistsError(
         `Input option with name "${option.name}" already exists.`
       );
       return;
@@ -54,7 +54,7 @@ export class DuanAgent {
 
   public addOutputOption(option: AgentOption): void {
     if (this._outputs.has(option.name)) {
-      new OptionNameExistError(
+      new KeyExistsError(
         `Output option with name "${option.name}" already exists.`
       );
       return;
@@ -63,7 +63,7 @@ export class DuanAgent {
   }
 }
 
-export class OptionNameExistError extends Error {
+export class KeyExistsError extends Error {
   constructor(message: string) {
     super();
     this.message = message;

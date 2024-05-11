@@ -1,4 +1,17 @@
-import { IOptionValue } from './option-value';
+import {
+  StringValue,
+  IntValue,
+  DoubleValue,
+  BooleanValue,
+  EnumValue,
+  IntRangeValue,
+  DoubleRangeValue,
+  IntBandValue,
+  DoubleBandValue,
+  Vector2Value,
+  Vector3Value,
+  QuaternionValue
+} from './option-value';
 
 export enum OptionType {
   Unkown = 0,
@@ -22,6 +35,19 @@ export class AgentOption {
   name: string = '';
   caption: string = '';
   type: OptionType = OptionType.Unkown;
-  value: IOptionValue = {};
+  value:
+    | null
+    | StringValue
+    | IntValue
+    | DoubleValue
+    | BooleanValue
+    | EnumValue
+    | IntRangeValue
+    | DoubleRangeValue
+    | IntBandValue
+    | DoubleBandValue
+    | Vector2Value
+    | Vector3Value
+    | QuaternionValue = null;
   display: DisplaySet = new DisplaySet();
 }

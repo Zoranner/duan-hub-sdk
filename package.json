@@ -1,0 +1,33 @@
+{
+  "name": "duan-hub-sdk",
+  "version": "0.0.1",
+  "description": "DuanHub SDK",
+  "author": "Zoranner",
+  "license": "MIT",
+  "exports": "./index.js",
+  "engines": {
+    "node": "^18.17.0 || >=20.5.0"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "node es-build.js",
+    "build:watch": "nodemon",
+    "format": "prettier --write --parser=typescript src/**/*.ts",
+    "postbuild": "tsc --emitDeclarationOnly --declaration"
+  },
+  "keywords": [],
+  "files": [
+    "dist/**/*"
+  ],
+  "dependencies": {
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/uuid": "9.0.8",
+    "esbuild": "^0.20.2",
+    "lint-staged": "^15.2.2",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.4.4"
+  }
+}

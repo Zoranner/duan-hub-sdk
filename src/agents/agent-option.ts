@@ -15,15 +15,18 @@ import {
 
 export enum OptionType {
   Unkown = 0,
-  String = 1,
-  Int = 2,
-  Double = 3,
-  Boolean = 4,
-  Enum = 5,
-  IntRange = 6,
-  DoubleRange = 7,
-  IntBand = 8,
-  DoubleBand = 9
+  String = 101,
+  Boolean = 102,
+  Int = 201,
+  Double = 202,
+  Vector2 = 302,
+  Vector3 = 303,
+  Quaternion = 304,
+  Enum = 401,
+  IntRange = 501,
+  DoubleRange = 502,
+  IntBand = 601,
+  DoubleBand = 602
 }
 
 export class DisplaySet {

@@ -1,16 +1,17 @@
+import { KeyExistsError, KeyNotExistsError } from '../errors/error-exception';
 import {
   StringValue,
+  BooleanValue,
   IntValue,
   DoubleValue,
-  BooleanValue,
+  Vector2Value,
+  Vector3Value,
+  QuaternionValue,
   EnumValue,
   IntRangeValue,
   DoubleRangeValue,
   IntBandValue,
-  DoubleBandValue,
-  Vector2Value,
-  Vector3Value,
-  QuaternionValue
+  DoubleBandValue
 } from './option-value';
 
 export enum OptionType {
@@ -55,7 +56,12 @@ export class OptionItem {
   display: DisplaySet = new DisplaySet();
 }
 
-export class AgentOption {
+export interface IAgentOptions {
+  groups: Record<string, string>;
+  items: Record<string, OptionItem>;
+}
+
+export class AgentOptions {
   private _groups: Map<string, string>;
   private _items: Map<string, OptionItem>;
 
@@ -132,35 +138,21 @@ export class AgentOption {
     this._items.delete(name);
   }
 
-  toJSON() {
+  toJSON(): IAgentOptions {
     return {
       groups: this.groups,
       items: this.items
     };
   }
 
-  static fromJSON(json: any): AgentOption {
-    const option = new AgentOption();
+  static fromJSON(json: IAgentOptions): AgentOptions {
+    const options = new AgentOptions();
     for (const [name, caption] of Object.entries(json.groups)) {
-      option.addGroup(name, caption as string);
+      options.addGroup(name, caption);
     }
-    for (const [name, item] of Object.entries(json.items)) {
-      option.addOption(name, item as OptionItem);
+    for (const [name, option] of Object.entries(json.items)) {
+      options.addOption(name, option);
     }
-    return option;
-  }
-}
-
-export class KeyExistsError extends Error {
-  constructor(message: string) {
-    super();
-    this.message = message;
-  }
-}
-
-export class KeyNotExistsError extends Error {
-  constructor(message: string) {
-    super();
-    this.message = message;
+    return options;
   }
 }

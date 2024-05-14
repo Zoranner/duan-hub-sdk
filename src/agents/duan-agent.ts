@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { AgentOption } from './agent-option';
+import { AgentOptions, IAgentOptions } from './agent-option';
 
 export enum AgentType {
   None = 0,
@@ -10,10 +10,20 @@ export enum AgentType {
   Sensor = 5
 }
 
+export interface IDuanAgent {
+  id: string;
+  name: string;
+  caption: string;
+  type: AgentType;
+  inputs: IAgentOptions;
+  outputs: IAgentOptions;
+  createTime: Date;
+}
+
 export class DuanAgent {
   private _id: string;
-  private _inputs: AgentOption;
-  private _outputs: AgentOption;
+  private _inputs: AgentOptions;
+  private _outputs: AgentOptions;
   private _createTime: Date;
 
   public name: string;
@@ -28,18 +38,18 @@ export class DuanAgent {
     return this._createTime;
   }
 
-  get inputs(): AgentOption {
+  get inputs(): AgentOptions {
     return this._inputs;
   }
 
-  get outputs(): AgentOption {
+  get outputs(): AgentOptions {
     return this._outputs;
   }
 
   private constructor(id: string = uuidv4(), createTime: Date = new Date()) {
     this._id = id;
-    this._inputs = new AgentOption();
-    this._outputs = new AgentOption();
+    this._inputs = new AgentOptions();
+    this._outputs = new AgentOptions();
     this._createTime = createTime;
     this.name = 'duan-agent';
     this.caption = 'DuanAgent';
@@ -63,8 +73,8 @@ export class DuanAgent {
     name: string,
     caption: string,
     type: AgentType,
-    inputs: AgentOption,
-    outputs: AgentOption,
+    inputs: AgentOptions,
+    outputs: AgentOptions,
     createTime: Date
   ): DuanAgent {
     const agent = new DuanAgent(id, createTime);
@@ -76,7 +86,7 @@ export class DuanAgent {
     return agent;
   }
 
-  toJSON() {
+  toJSON(): IDuanAgent {
     return {
       id: this.id,
       name: this.name,
@@ -88,23 +98,16 @@ export class DuanAgent {
     };
   }
 
-  static fromJSON(json: any): DuanAgent {
+  static fromJSON(json: IDuanAgent): DuanAgent {
     const agent = this.getInstance(
       json.id,
       json.name,
       json.caption,
       json.type,
-      AgentOption.fromJSON(json.inputs),
-      AgentOption.fromJSON(json.outputs),
+      AgentOptions.fromJSON(json.inputs),
+      AgentOptions.fromJSON(json.outputs),
       json.createTime
     );
     return agent;
-  }
-}
-
-export class KeyExistsError extends Error {
-  constructor(message: string) {
-    super();
-    this.message = message;
   }
 }

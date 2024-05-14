@@ -54,6 +54,8 @@ abstract class BasicValue<TValue> implements IOptionValue {
 
 export class StringValue extends BasicValue<string> {}
 
+export interface BooleanValue extends BasicValue<boolean> {}
+
 class NumberValue extends BasicValue<number> {
   min: number = 0;
   max: number = 0;
@@ -63,7 +65,11 @@ export interface IntValue extends NumberValue {}
 
 export interface DoubleValue extends NumberValue {}
 
-export interface BooleanValue extends BasicValue<boolean> {}
+export interface Vector2Value extends BasicValue<Vector2> {}
+
+export interface Vector3Value extends BasicValue<Vector3> {}
+
+export interface QuaternionValue extends BasicValue<Quaternion> {}
 
 export interface EnumItem {
   caption: string;
@@ -91,9 +97,3 @@ interface BandValue extends BasicValue<Band> {
 export interface IntBandValue extends BandValue {}
 
 export interface DoubleBandValue extends BandValue {}
-
-export interface Vector2Value extends BasicValue<Vector2> {}
-
-export interface Vector3Value extends BasicValue<Vector3> {}
-
-export interface QuaternionValue extends BasicValue<Quaternion> {}

@@ -19,6 +19,6 @@ export {
   QuaternionValue
 } from './agents/option-value';
 
-export { OptionType, DisplaySet, AgentOption } from './agents/agent-option';
+export { OptionType, DisplaySet, AgentOptions } from './agents/agent-option';
 
 export { AgentType, DuanAgent } from './agents/duan-agent';

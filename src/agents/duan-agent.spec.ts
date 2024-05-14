@@ -1,4 +1,4 @@
-import { AgentOption, OptionItem, OptionType } from './agent-option';
+import { OptionItem, OptionType } from './agent-option';
 import { AgentType, DuanAgent } from './duan-agent';
 
 describe('DuanAgent', () => {

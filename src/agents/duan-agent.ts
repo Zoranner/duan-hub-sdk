@@ -88,14 +88,14 @@ export class DuanAgent {
     };
   }
 
-  static fromJson(json: any): DuanAgent {
+  static fromJSON(json: any): DuanAgent {
     const agent = this.getInstance(
       json.id,
       json.name,
       json.caption,
       json.type,
-      json.inputs,
-      json.outputs,
+      AgentOption.fromJSON(json.inputs),
+      AgentOption.fromJSON(json.outputs),
       json.createTime
     );
     return agent;

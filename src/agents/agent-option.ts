@@ -35,7 +35,6 @@ export class DisplaySet {
 }
 
 export class OptionItem {
-  name: string = '';
   caption: string = '';
   type: OptionType = OptionType.Unkown;
   group: string = '';
@@ -73,43 +72,62 @@ export class AgentOption {
     this._items = new Map<string, OptionItem>();
   }
 
+  public containGroup(name: string): boolean {
+    return this._groups.has(name);
+  }
+
   public addGroup(name: string, caption: string): void {
     if (this._groups.has(name)) {
-      throw new KeyExistsError(
-        `Input option with name "${name}" already exists.`
-      );
+      throw new KeyExistsError(`Group with name "${name}" already exists.`);
+    }
+    this._groups.set(name, caption);
+  }
+
+  public setGroup(name: string, caption: string) {
+    if (!this._groups.has(name)) {
+      throw new KeyNotExistsError(`Group with name "${name}" does not exist.`);
     }
     this._groups.set(name, caption);
   }
 
   public removeGroup(name: string) {
     if (!this._groups.has(name)) {
-      throw new KeyExistsError(
-        `Input option with name "${name}" already exists.`
-      );
+      throw new KeyNotExistsError(`Group with name "${name}" does not exist.`);
     }
     this._groups.delete(name);
   }
 
-  public addOption(option: OptionItem): void {
-    if (this._items.has(option.name)) {
-      throw new KeyExistsError(
-        `Output option with name "${option.name}" already exists.`
-      );
+  public containOption(name: string): boolean {
+    return this._items.has(name);
+  }
+
+  public addOption(name: string, option: OptionItem): void {
+    if (this._items.has(name)) {
+      throw new KeyExistsError(`Option with name "${name}" already exists.`);
     }
     if (option.group && !this._groups.has(option.group)) {
-      throw new KeyExistsError(
-        `Output option with name "${option.name}" already exists.`
+      throw new KeyNotExistsError(
+        `Group with name "${option.group}" does not exist.`
       );
     }
-    this._items.set(option.name, option);
+    this._items.set(name, option);
+  }
+
+  public setOption(name: string, option: OptionItem): void {
+    if (!this._items.has(name)) {
+      throw new KeyNotExistsError(`Option with name "${name}" does not exist.`);
+    }
+    if (option.group && !this._groups.has(option.group)) {
+      throw new KeyNotExistsError(
+        `Group with name "${option.group}" does not exist.`
+      );
+    }
+    this._items.set(name, option);
   }
 
   public removeOption(name: string): void {
     if (!this._items.has(name)) {
-      throw new KeyExistsError(
-        `Output option with name "${name}" already exists.`
-      );
+      throw new KeyNotExistsError(`Option with name "${name}" does not exist.`);
     }
     this._items.delete(name);
   }
@@ -121,15 +139,26 @@ export class AgentOption {
     };
   }
 
-  static fromJson(json: any): AgentOption {
+  static fromJSON(json: any): AgentOption {
     const option = new AgentOption();
-    option._groups = json.groups;
-    option._items = json.items;
+    for (const [name, caption] of Object.entries(json.groups)) {
+      option.addGroup(name, caption as string);
+    }
+    for (const [name, item] of Object.entries(json.items)) {
+      option.addOption(name, item as OptionItem);
+    }
     return option;
   }
 }
 
 export class KeyExistsError extends Error {
+  constructor(message: string) {
+    super();
+    this.message = message;
+  }
+}
+
+export class KeyNotExistsError extends Error {
   constructor(message: string) {
     super();
     this.message = message;

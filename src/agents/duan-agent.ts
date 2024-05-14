@@ -12,8 +12,8 @@ export enum AgentType {
 
 export class DuanAgent {
   private _id: string;
-  private _inputs: Map<string, AgentOption>;
-  private _outputs: Map<string, AgentOption>;
+  private _inputs: AgentOption;
+  private _outputs: AgentOption;
   private _createTime: Date;
 
   public name: string;
@@ -28,18 +28,18 @@ export class DuanAgent {
     return this._createTime;
   }
 
-  get inputs(): AgentOption[] {
-    return Array.from(this._inputs.values());
+  get inputs(): AgentOption {
+    return this._inputs;
   }
 
-  get outputs(): AgentOption[] {
-    return Array.from(this._outputs.values());
+  get outputs(): AgentOption {
+    return this._outputs;
   }
 
   private constructor(id: string = uuidv4(), createTime: Date = new Date()) {
     this._id = id;
-    this._inputs = new Map();
-    this._outputs = new Map();
+    this._inputs = new AgentOption();
+    this._outputs = new AgentOption();
     this._createTime = createTime;
     this.name = 'duan-agent';
     this.caption = 'DuanAgent';
@@ -63,8 +63,8 @@ export class DuanAgent {
     name: string,
     caption: string,
     type: AgentType,
-    inputs: Map<string, AgentOption>,
-    outputs: Map<string, AgentOption>,
+    inputs: AgentOption,
+    outputs: AgentOption,
     createTime: Date
   ): DuanAgent {
     const agent = new DuanAgent(id, createTime);
@@ -76,32 +76,14 @@ export class DuanAgent {
     return agent;
   }
 
-  public addInputOption(option: AgentOption): void {
-    if (this._inputs.has(option.name)) {
-      throw new KeyExistsError(
-        `Input option with name "${option.name}" already exists.`
-      );
-    }
-    this._inputs.set(option.name, option);
-  }
-
-  public addOutputOption(option: AgentOption): void {
-    if (this._outputs.has(option.name)) {
-      throw new KeyExistsError(
-        `Output option with name "${option.name}" already exists.`
-      );
-    }
-    this._outputs.set(option.name, option);
-  }
-
   toJSON() {
     return {
       id: this.id,
       name: this.name,
       caption: this.caption,
       type: this.type,
-      inputs: this.inputs,
-      outputs: this.outputs,
+      inputs: this.inputs.toJSON(),
+      outputs: this.outputs.toJSON(),
       createTime: this.createTime
     };
   }

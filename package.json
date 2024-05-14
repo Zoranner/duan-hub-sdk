@@ -1,15 +1,14 @@
 {
   "name": "duan-hub-sdk",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "DuanHub SDK",
   "author": "Zoranner",
   "license": "MIT",
   "main": "./dist/index.js",
   "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "type": "module",
   "engines": {
-    "node": "^18.17.0 || >=20.5.0"
+		"node": ">=18"
   },
   "scripts": {
     "format": "prettier --write --parser=typescript src/**/*.ts",
